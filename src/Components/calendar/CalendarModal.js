@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 const customStyles = {
   content: {
@@ -16,19 +17,20 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours');
-const end = now.clone().add(1, 'hours');
+const nowPlusOneHour = now.clone().add(1, 'hours');
 
 export const CalendarModal = () => {
 
   const [dateStart, setDateStart] = useState(now.toDate());
-  const [dateEnd, setDateEnd] = useState(end.toDate());
+  const [dateEnd, setDateEnd] = useState(nowPlusOneHour.toDate());
+  const [titleValid, setTitleValid] = useState(true);
   const [formValues, setFormValues] = useState({
     title: 'Evento',
     notes: '',
     start: now.toDate(),
-    end: end.toDate()
+    end: nowPlusOneHour.toDate()
   });
-  const {title, notes} = formValues;
+  const {title, notes, start, end} = formValues;
 
   const handleInputChange = ({target}) => {
     setFormValues({
@@ -38,7 +40,7 @@ export const CalendarModal = () => {
   };
 
   const closeModal = () => {
-    
+    // cerrar el modal
   };
 
   const handleStartDateChange = (e) => {
@@ -59,8 +61,20 @@ export const CalendarModal = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
+    const momentStart = moment(start);
+    const momentEnd = moment(end);
 
-    console.log(formValues);
+    if(momentStart.isSameOrAfter(momentEnd)){
+      return Swal.fire('Error', 'La fecha fin debe ser mayor a la fecha de inicio', 'error');
+    }
+
+    if(title.trim().length < 2){
+      return setTitleValid(false); 
+    }
+    //grabación en la base de datos
+
+    setTitleValid(true);
+    closeModal();
   };
 
   return (
@@ -104,7 +118,7 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input 
             type="text" 
-            className="form-control"
+            className={`form-control ${!titleValid && 'is-invalid'}`}
             placeholder="Título del evento"
             name="title"
             value={title}
