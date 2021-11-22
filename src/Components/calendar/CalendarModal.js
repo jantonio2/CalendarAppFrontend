@@ -5,6 +5,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew } from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -44,7 +45,6 @@ export const CalendarModal = () => {
   };
 
   const closeModal = () => {
-    // cerrar el modal
     dispatch(uiCloseModal());
   };
 
@@ -77,6 +77,7 @@ export const CalendarModal = () => {
       return setTitleValid(false); 
     }
     //grabación en la base de datos
+    dispatch(eventAddNew({...formValues, id: new Date().getTime()}));
 
     setTitleValid(true);
     closeModal();
