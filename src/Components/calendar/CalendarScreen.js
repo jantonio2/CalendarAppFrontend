@@ -8,6 +8,8 @@ import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
+import { eventSetActive } from '../../actions/events';
+import { AddNewFab } from '../ui/AddNewFab';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 moment.locale('es');
@@ -19,7 +21,7 @@ const events = [{
   start: moment().toDate(),
   end: moment().add(2, 'hours').toDate(),
   bgcolor: '#fafafa',
-  notes: ['Comprar Torta'],
+  notes: 'Comprar Torta',
   user: {
     _id: '123',
     name: 'Antonio'
@@ -32,12 +34,12 @@ export const CalendarScreen = () => {
   const dispatch = useDispatch();
 
   const onDoubleClick = (e) => {
-    console.log(e);
     dispatch(uiOpenModal());
   };
 
   const onSelectEvent = (e) => {
-    console.log(e);
+    dispatch(uiOpenModal());
+    dispatch(eventSetActive(e));
   };
   
   const onViewChange = (e) => {
@@ -79,7 +81,7 @@ export const CalendarScreen = () => {
           event: CalendarEvent
         }}
       />
-
+        <AddNewFab />
       <CalendarModal />
     </div>
   );
