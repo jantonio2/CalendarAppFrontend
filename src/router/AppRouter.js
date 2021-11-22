@@ -5,8 +5,8 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import { LoginScreen } from '../Components/auth/LoginScreen';
-import { CalendarScreen } from '../Components/calendar/CalendarScreen';
+import { LoginScreen } from '../components/auth/LoginScreen';
+import { CalendarScreen } from '../components/calendar/CalendarScreen';
 
 export const AppRouter = () => {
   return (
