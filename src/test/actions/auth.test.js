@@ -18,7 +18,7 @@ let store = mockStore( initState );
 
 Storage.prototype.setItem = jest.fn();
 
-let token = '';
+// let token = '';
 
 describe('Pruebas en las acciones del auth', () => {
 
@@ -43,7 +43,7 @@ describe('Pruebas en las acciones del auth', () => {
     expect( localStorage.setItem ).toHaveBeenCalledWith( 'token-init-date', expect.any(Number) );
 
     // Extrayendo informacion de una función Jest
-    token = localStorage.setItem.mock.calls[0][1];
+    // token = localStorage.setItem.mock.calls[0][1];
   });
   
   test('startLogin debe ser incorrecto', async() => {
