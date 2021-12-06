@@ -17,7 +17,7 @@ describe('Pruebas en <AppRouter />', () => {
     };
     
     const store = mockStore( initState );
-    
+
     const wrapper = mount(
       <Provider store={ store }>
         <AppRouter />
@@ -28,4 +28,51 @@ describe('Pruebas en <AppRouter />', () => {
     expect(wrapper.find('h5').exists()).toBeTruthy();
   });
   
+  test('debe de mostrar la ruta publica', () => {
+    const initState = {
+      auth: {
+        checking: false,
+      }
+    };
+    
+    const store = mockStore( initState );
+    
+    const wrapper = mount(
+      <Provider store={ store }>
+        <AppRouter />
+      </Provider>
+    ); 
+    
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('.login-container').exists()).toBeTruthy();
+  });
+
+  test('debe de mostrar la ruta privada', () => {
+    const initState = {
+      auth: {
+        checking: false,
+        uid: 'TESTING',
+        name: 'test'
+        
+      },
+      calendar: {
+        events: []
+      },
+      ui: {
+        openModal: false
+      } 
+    };
+    
+    const store = mockStore( initState );
+    
+    const wrapper = mount(
+      <Provider store={ store }>
+        <AppRouter />
+      </Provider>
+    ); 
+    
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('.calendar-screen').exists()).toBeTruthy();
+  });
+
 });
