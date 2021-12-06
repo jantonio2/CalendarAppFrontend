@@ -52,8 +52,7 @@ describe('Pruebas en <AppRouter />', () => {
       auth: {
         checking: false,
         uid: 'TESTING',
-        name: 'test'
-        
+        name: 'test'  
       },
       calendar: {
         events: []
