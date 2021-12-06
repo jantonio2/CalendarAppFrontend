@@ -93,7 +93,7 @@ exports[`Pruebas en el componente <LoginScreen /> debe mostrarse correctamente 1
             onChange={[Function]}
             placeholder="Contraseña"
             type="password"
-            value="123456"
+            value=""
           />
         </div>
         <div
@@ -105,7 +105,7 @@ exports[`Pruebas en el componente <LoginScreen /> debe mostrarse correctamente 1
             onChange={[Function]}
             placeholder="Repita la contraseña"
             type="password"
-            value="123456"
+            value=""
           />
         </div>
         <div
