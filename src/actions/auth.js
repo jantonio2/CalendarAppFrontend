@@ -40,6 +40,14 @@ export const startRegister = (email, password, name) => {
 
 export const startChecking = () => {
   return async( dispatch ) => {
+
+    if( process.env.NODE_ENV !== 'test' ) {
+      const isTokenPresent = !!(localStorage.getItem("token") || undefined);
+      if ( !isTokenPresent ) {
+        dispatch( checkingFinish() );
+        return false;
+      }
+    }
     const resp = await fetchWithToken('auth/renew');
     const body = await resp.json();
 
