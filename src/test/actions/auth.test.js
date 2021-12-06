@@ -2,7 +2,8 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import Swal from 'sweetalert2';
 import { types } from '../../types/types';
-import { startLogin } from './../../actions/auth';
+import { startLogin, startRegister } from './../../actions/auth';
+import * as fetchModule from '../../helpers/fetch';
 
 jest.mock('sweetalert2', () => ({
   fire: jest.fn()
@@ -56,4 +57,30 @@ describe('Pruebas en las acciones del auth', () => {
     expect( Swal.fire ).toHaveBeenCalledWith('Error', 'El usuario no existe', 'error');
   });
 
+  test('startRegister debe funcionar correctamente', async() => {
+    fetchModule.fetchWithoutToken = jest.fn(() => ({
+      json() {
+        return {
+          ok: true,
+          uid: '123456789',
+          name: 'Testing',
+          token: 'abc123456xyz'
+        }
+      }
+    }));
+    
+    await store.dispatch( startRegister( 'testing@testing.com', 'testingtesting', 'TEST' ) );
+    const actions = store.getActions();
+
+    expect( actions[0] ).toEqual({
+      type: types.authLogin,
+      payload: {
+        uid: '123456789',
+        name: 'Testing',
+      }
+    });
+    expect( localStorage.setItem ).toHaveBeenCalledWith( 'token', 'abc123456xyz' );
+    expect( localStorage.setItem ).toHaveBeenCalledWith( 'token-init-date', expect.any(Number) );
+  });
+  
 });
